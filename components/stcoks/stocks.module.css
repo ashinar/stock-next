@@ -1,0 +1,56 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f1f1;
+  justify-content: space-around;
+}
+
+.symbolWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.symbol {
+  font-weight: 600;
+  font-size: 15px;
+  margin-left: 7px;
+}
+
+.price {
+  font-size: 15px;
+}
+
+.green {
+  color: #0a8a33;
+}
+
+.red {
+  color: #c00000;
+}
+
+.header {
+  margin: 20px 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+
+.buy {
+  color: #0a8a33;
+  background: yellow;
+  padding: 2px;
+}
