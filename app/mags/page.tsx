@@ -2,6 +2,8 @@ import Stocks from "@/components/stcoks/stocks";
 import { getStock } from "@/lib/finnhub";
 
 export default async function Mags() {
+  let stocks = [];
+
   const stock = await getStock("MAGS", "/stocks/mags.png");
   if (stock == null) {
     return null;
@@ -11,9 +13,13 @@ export default async function Mags() {
     stock.CurrentPrice > 67.26 ||
     (stock.CurrentPrice > 62 && stock.CurrentPrice < 65);
 
+  stocks.push(stock);
+
   return (
     <div>
-      <Stocks stock={stock} />
+      {stocks.map((s) => (
+        <Stocks key={s.Symbol} stock={s} />
+      ))}
     </div>
   );
 }
