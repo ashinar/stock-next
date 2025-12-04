@@ -15,6 +15,7 @@
 .symbolWrapper {
   display: flex;
   align-items: center;
+  flex-basis: 150px;
 }
 
 .logo {
@@ -32,13 +33,16 @@
 
 .price {
   font-size: 15px;
+  flex-basis: 120px;
 }
 
 .green {
   color: #0a8a33;
+  flex-basis: 120px;
 }
 
 .red {
+  flex-basis: 120px;
   color: #c00000;
 }
 
@@ -50,7 +54,8 @@
 }
 
 .buy {
+  flex-basis: 120px;
   color: #0a8a33;
   background: yellow;
-  padding: 2px;
+  text-align: center;
 }

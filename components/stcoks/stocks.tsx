@@ -18,7 +18,11 @@ export default function stocks({ stock }: { stock: StockData }) {
 
         <div className={styles.symbol}>{stock.Symbol}</div>
       </div>
-      {stock.TimeToBuy ? <div className={styles.buy}>Time to Buy</div> : null}
+      {stock.TimeToBuy ? (
+        <div className={styles.buy}>Time to Buy</div>
+      ) : (
+        <div className={styles.price}></div>
+      )}
 
       <div className={styles.price}>Price: {stock.CurrentPrice}</div>
 
