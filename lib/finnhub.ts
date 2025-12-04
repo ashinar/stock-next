@@ -6,11 +6,11 @@ export type StockData = {
   OpenPrice: number;
   PreviousClose: number;
   Symbol: string;
-  Img: string;
+  Img?: string;
   TimeToBuy: boolean;
 };
 
-export async function getStock(symbol: string, img: string) {
+export async function getStock(symbol: string, img?: string) {
   const apiKey = "d431ai1r01qvk0j9nnigd431ai1r01qvk0j9nnj0";
 
   const res = await fetch(

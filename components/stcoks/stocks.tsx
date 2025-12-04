@@ -8,13 +8,15 @@ export default function stocks({ stock }: { stock: StockData }) {
   return (
     <div className={styles.row}>
       <div className={styles.symbolWrapper}>
-        <Image
-          src={stock.Img}
-          alt={stock.Symbol}
-          width={32}
-          height={32}
-          className={styles.logo}
-        />
+        {stock.Img ? (
+          <Image
+            src={stock.Img}
+            alt={stock.Symbol}
+            width={32}
+            height={32}
+            className={styles.logo}
+          />
+        ) : null}
 
         <div className={styles.symbol}>{stock.Symbol}</div>
       </div>
