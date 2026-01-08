@@ -6,6 +6,8 @@ export default function Home() {
       <Link href="/mags">Mags</Link>
       <br></br>
       <Link href="/cyclestrading">CyclesTrading</Link>
+      <br></br>
+      <Link href="/ta">Tel Aviv</Link>
     </>
   );
 }
