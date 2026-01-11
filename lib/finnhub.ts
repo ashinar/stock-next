@@ -8,6 +8,7 @@ export type StockData = {
   Symbol: string;
   Img?: string;
   TimeToBuy: boolean;
+  IsUp: boolean;
 };
 
 export async function getStock(symbol: string, img?: string) {
@@ -33,6 +34,7 @@ export async function getStock(symbol: string, img?: string) {
     Symbol: symbol,
     Img: img,
     TimeToBuy: false,
+    IsUp: data.d > 0,
   };
 
   return stock;

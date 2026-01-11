@@ -1,45 +1,80 @@
 "use client";
 import Stocks from "@/components/stcoks/stocks";
 import { getStock, StockData } from "@/lib/finnhub";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function CyclesTrading() {
+  const didRun = useRef(false);
+
   const [stocks_6_1_26, setStocks_6_1_26] = useState<StockData[]>([]);
   useEffect(() => {
-    if (!stocks_6_1_26.length) {
+    if (!didRun.current) {
+      didRun.current = true;
       loadstocks_6_1_26();
     }
   }, []);
 
   const loadstocks_6_1_26 = async (): Promise<void> => {
-    debugger;
-    let RYAAY = await getStock("RYAAY"); // cycle trading
-    if (RYAAY != null) {
-      RYAAY.TimeToBuy = RYAAY.CurrentPrice < 69;
-      setStocks_6_1_26((prevItems) => [...prevItems, RYAAY]);
+    let APLD = await getStock("APLD"); //Hagit
+    if (APLD != null) {
+      APLD.TimeToBuy = APLD.IsUp;
+      setStocks_6_1_26((prevItems) => [...prevItems, APLD]);
+    }
+
+    let NVTS = await getStock("NVTS"); //Hagit
+    if (NVTS != null) {
+      NVTS.TimeToBuy = NVTS.IsUp && NVTS.CurrentPrice > 10.07;
+      setStocks_6_1_26((prevItems) => [...prevItems, NVTS]);
+    }
+
+    let BABA = await getStock("BABA"); // TrendSpider
+    if (BABA != null) {
+      BABA.TimeToBuy = BABA.IsUp && BABA.CurrentPrice > 148;
+      setStocks_6_1_26((prevItems) => [...prevItems, BABA]);
     }
 
     let RGTI = await getStock("RGTI"); // cycle trading
     if (RGTI != null) {
-      RGTI.TimeToBuy = RGTI.CurrentPrice < 25;
+      RGTI.TimeToBuy = RGTI.CurrentPrice < 22 || RGTI.CurrentPrice > 26;
       setStocks_6_1_26((prevItems) => [...prevItems, RGTI]);
     }
 
-    let ANET = await getStock("ANET"); // cycle trading
-    if (ANET != null) {
-      ANET.TimeToBuy = ANET.CurrentPrice > 131;
-      setStocks_6_1_26((prevItems) => [...prevItems, ANET]);
-    }
-    let RKLB = await getStock("RKLB"); // cycle trading
+    let RKLB = await getStock("RKLB"); //*cycle trading*
     if (RKLB != null) {
-      RKLB.TimeToBuy = RKLB.CurrentPrice < 82;
+      RKLB.TimeToBuy = RKLB.CurrentPrice < 82 || RKLB.CurrentPrice > 86;
       setStocks_6_1_26((prevItems) => [...prevItems, RKLB]);
     }
-    // let LMB = await getStock("LMB"); // cycle trading
-    // if (LMB != null) {
-    //   LMB.TimeToBuy = LMB.Change > 0;
-    //   setstocks_6_1_26((prevItems) => [...prevItems, LMB]);
-    // }
+
+    let RYAAY = await getStock("RYAAY"); //*cycle trading*
+    if (RYAAY != null) {
+      RYAAY.TimeToBuy = RYAAY.CurrentPrice < 69 || RYAAY.CurrentPrice > 74;
+      setStocks_6_1_26((prevItems) => [...prevItems, RYAAY]);
+    }
+
+    let ANET = await getStock("ANET"); //*cycle trading*
+    if (ANET != null) {
+      ANET.TimeToBuy = ANET.IsUp && ANET.CurrentPrice > 131;
+      setStocks_6_1_26((prevItems) => [...prevItems, ANET]);
+    }
+
+    let ORLY = await getStock("ORLY"); //*cycle trading*
+    if (ORLY != null) {
+      ORLY.TimeToBuy = ORLY.CurrentPrice < 90 || ORLY.CurrentPrice > 92.17;
+      setStocks_6_1_26((prevItems) => [...prevItems, ORLY]);
+    }
+
+    let IREN = await getStock("IREN"); // Dark pool
+    if (IREN != null) {
+      IREN.TimeToBuy = IREN.IsUp && IREN.CurrentPrice > 50;
+      setStocks_6_1_26((prevItems) => [...prevItems, IREN]);
+    }
+
+    const OKLO = await getStock("OKLO");
+    if (OKLO != null) {
+      OKLO.TimeToBuy = OKLO.IsUp && OKLO.CurrentPrice > 105; //Dark pool
+      setStocks_6_1_26((prevItems) => [...prevItems, OKLO]);
+    }
+
     // let COMP = await getStock("LMB"); // cycle trading
     // if (COMP != null) {
     //   COMP.TimeToBuy = COMP.Change > 0;
@@ -55,11 +90,7 @@ export default function CyclesTrading() {
     //   stock.TimeToBuy = stock.CurrentPrice < 171 && stock.Change >= 0;
     //   stocks.push(stock);
     // }
-    // stock = await getStock("OKLO");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0;
-    //   stocks.push(stock);
-    // }
+
     // stock = await getStock("TPL");
     // if (stock != null) {
     //   stock.TimeToBuy = stock.Change >= 0 && stock.CurrentPrice > 921.8;

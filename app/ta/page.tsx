@@ -16,6 +16,12 @@ export default function CyclesTrading() {
   }, []);
 
   const loadTAStocks = async (): Promise<void> => {
+    let ELAL = await getStock("ELAL");
+    if (ELAL != null) {
+      ELAL.TimeToBuy = ELAL.Change > 0 && ELAL.CurrentPrice > 1806;
+      setTaStocks((prevItems) => [...prevItems, ELAL]);
+    }
+
     let NXSN = await getStock("NXSN"); //NEXT VISION
     if (NXSN != null) {
       if (NXSN.CurrentPrice == 0) {
