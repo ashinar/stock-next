@@ -37,5 +37,16 @@ export async function getStock(symbol: string, img?: string) {
     IsUp: data.d > 0,
   };
 
+  if (!stock?.CurrentPrice) {
+    const msg = `Cannot load the stock ${stock.Symbol}`;
+
+    console.warn(
+      "%c⚠️" + msg,
+      "background:#ff9800;color:#000;font-weight:bold;padding:6px 10px;border-radius:4px;"
+    );
+
+    return null;
+  }
+
   return stock;
 }

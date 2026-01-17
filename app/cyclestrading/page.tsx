@@ -15,10 +15,22 @@ export default function CyclesTrading() {
   }, []);
 
   const loadstocks_6_1_26 = async (): Promise<void> => {
+    let USAR = await getStock("USAR"); //Dark pool
+    if (USAR != null) {
+      USAR.TimeToBuy = USAR.IsUp && USAR.CurrentPrice > 18.5;
+      setStocks_6_1_26((prevItems) => [...prevItems, USAR]);
+    }
+
     let APLD = await getStock("APLD"); //Hagit
     if (APLD != null) {
       APLD.TimeToBuy = APLD.IsUp;
       setStocks_6_1_26((prevItems) => [...prevItems, APLD]);
+    }
+
+    let EOSE = await getStock("EOSE"); //Dark pool
+    if (EOSE != null) {
+      EOSE.TimeToBuy = EOSE.IsUp && EOSE.CurrentPrice > 14;
+      setStocks_6_1_26((prevItems) => [...prevItems, EOSE]);
     }
 
     let NVTS = await getStock("NVTS"); //Hagit
@@ -31,6 +43,12 @@ export default function CyclesTrading() {
     if (BABA != null) {
       BABA.TimeToBuy = BABA.IsUp && BABA.CurrentPrice > 148;
       setStocks_6_1_26((prevItems) => [...prevItems, BABA]);
+    }
+
+    let OPEN = await getStock("OPEN"); // Dark ppl
+    if (OPEN != null) {
+      OPEN.TimeToBuy = OPEN.IsUp && OPEN.CurrentPrice > 6.73;
+      setStocks_6_1_26((prevItems) => [...prevItems, OPEN]);
     }
 
     let RGTI = await getStock("RGTI"); // cycle trading
@@ -47,7 +65,7 @@ export default function CyclesTrading() {
 
     let RYAAY = await getStock("RYAAY"); //*cycle trading*
     if (RYAAY != null) {
-      RYAAY.TimeToBuy = RYAAY.CurrentPrice < 69 || RYAAY.CurrentPrice > 74;
+      RYAAY.TimeToBuy = RYAAY.CurrentPrice < 68 || RYAAY.CurrentPrice > 74;
       setStocks_6_1_26((prevItems) => [...prevItems, RYAAY]);
     }
 
@@ -65,14 +83,33 @@ export default function CyclesTrading() {
 
     let IREN = await getStock("IREN"); // Dark pool
     if (IREN != null) {
-      IREN.TimeToBuy = IREN.IsUp && IREN.CurrentPrice > 50;
+      IREN.TimeToBuy = IREN.IsUp && IREN.CurrentPrice > 53;
       setStocks_6_1_26((prevItems) => [...prevItems, IREN]);
     }
 
     const OKLO = await getStock("OKLO");
     if (OKLO != null) {
-      OKLO.TimeToBuy = OKLO.IsUp && OKLO.CurrentPrice > 105; //Dark pool
+      OKLO.TimeToBuy = OKLO.IsUp && OKLO.CurrentPrice > 91; //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, OKLO]);
+    }
+
+    const ONDS = await getStock("ONDS");
+    if (ONDS != null) {
+      ONDS.TimeToBuy =
+        ONDS.IsUp && (ONDS.CurrentPrice < 11 || ONDS.CurrentPrice > 15); //Dark pool
+      setStocks_6_1_26((prevItems) => [...prevItems, ONDS]);
+    }
+
+    const ASTS = await getStock("ASTS");
+    if (ASTS != null) {
+      ASTS.TimeToBuy = ASTS.IsUp; //Dark pool
+      setStocks_6_1_26((prevItems) => [...prevItems, ASTS]);
+    }
+
+    const CRML = await getStock("CRML");
+    if (CRML != null) {
+      CRML.TimeToBuy = CRML.IsUp && CRML.CurrentPrice > 11; //Dark pool
+      setStocks_6_1_26((prevItems) => [...prevItems, CRML]);
     }
 
     // let COMP = await getStock("LMB"); // cycle trading
