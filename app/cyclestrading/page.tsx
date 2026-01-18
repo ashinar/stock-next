@@ -15,11 +15,10 @@ export default function CyclesTrading() {
   }, []);
 
   const loadstocks_6_1_26 = async (): Promise<void> => {
-    let USAR = await getStock("USAR"); //Dark pool
-    if (USAR != null) {
-      USAR.TimeToBuy = USAR.IsUp && USAR.CurrentPrice > 18.5;
-      setStocks_6_1_26((prevItems) => [...prevItems, USAR]);
-    }
+    CheckStocks("NFLX", true, 231); //TrendSpider
+    CheckStocks("AMD", true, 82); //TrendSpider
+
+    CheckStocks("USAR", true, 18.5); //Dark pool
 
     let APLD = await getStock("APLD"); //Hagit
     if (APLD != null) {
@@ -89,7 +88,7 @@ export default function CyclesTrading() {
 
     const OKLO = await getStock("OKLO");
     if (OKLO != null) {
-      OKLO.TimeToBuy = OKLO.IsUp && OKLO.CurrentPrice > 91; //Dark pool
+      OKLO.TimeToBuy = OKLO.IsUp && OKLO.CurrentPrice > 94; //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, OKLO]);
     }
 
@@ -111,76 +110,18 @@ export default function CyclesTrading() {
       CRML.TimeToBuy = CRML.IsUp && CRML.CurrentPrice > 11; //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, CRML]);
     }
-
-    // let COMP = await getStock("LMB"); // cycle trading
-    // if (COMP != null) {
-    //   COMP.TimeToBuy = COMP.Change > 0;
-    //   setstocks_6_1_26((prevItems) => [...prevItems, COMP]);
-    // }
-    // let ATO = await getStock("ATO"); // cycle trading
-    // if (ATO != null) {
-    //   ATO.TimeToBuy = ATO.CurrentPrice < 171 && ATO.Change >= 0;
-    //   setstocks_6_1_26((prevItems) => [...prevItems, ATO]);
-    // }
-    // stock = await getStock("ATO");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.CurrentPrice < 171 && stock.Change >= 0;
-    //   stocks.push(stock);
-    // }
-
-    // stock = await getStock("TPL");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0 && stock.CurrentPrice > 921.8;
-    //   stocks.push(stock);
-    // }
-    // stock = await getStock("ROK");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0 && stock.CurrentPrice < 382;
-    //   stocks.push(stock);
-    // }
-    // stock = await getStock("NVDA");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0 && stock.CurrentPrice < 184.85;
-    //   stocks.push(stock);
-    // }
-    // stock = await getStock("AAPL");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0 && stock.CurrentPrice < 268;
-    //   stocks.push(stock);
-    // }
-    // stock = await getStock("ORCL");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0;
-    //   stocks.push(stock);
-    // }
-    // stock = await getStock("AGI");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0;
-    //   stocks.push(stock);
-    // }
-    // stock = await getStock("INTR");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0 && stock.CurrentPrice < 8.5;
-    //   stocks.push(stock);
-    // }
-    // stock = await getStock("ARKK");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0 && stock.CurrentPrice > 8.5;
-    //   stocks.push(stock);
-    // }
-    // stock = await getStock("FROG");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0 && stock.CurrentPrice > 62;
-    //   stocks.push(stock);
-    // }
-    // stock = await getStock("TEVA");
-    // if (stock != null) {
-    //   stock.TimeToBuy = stock.Change >= 0 && stock.CurrentPrice < 26;
-    //   stocks.push(stock);
-    // }
   };
 
-  //const loadStocks9_12_25 = () => {
+  const CheckStocks = async (symbol: string, IsUp: boolean, price: number) => {
+    let stock = await getStock(symbol);
+    if (stock != null) {
+      if (stock.IsUp && IsUp && stock.CurrentPrice >= price) {
+        stock.TimeToBuy = true;
+      }
+
+      setStocks_6_1_26((prevItems) => [...prevItems, stock]);
+    }
+  };
 
   return (
     <div>

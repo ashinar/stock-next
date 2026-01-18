@@ -5,6 +5,10 @@ import Image from "next/image";
 export default function stocks({ stock }: { stock: StockData }) {
   const isUp = stock.Change >= 0;
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(stock.Symbol);
+  };
+
   return (
     <div className={styles.row}>
       <div className={styles.symbolWrapper}>
@@ -18,7 +22,16 @@ export default function stocks({ stock }: { stock: StockData }) {
           />
         ) : null}
 
-        <div className={styles.symbol}>{stock.Symbol}</div>
+        <div className={styles.symbol}>
+          <a
+            onClick={() => {
+              copyToClipboard();
+            }}
+          >
+            <span>📋</span>
+            {stock.Symbol}
+          </a>
+        </div>
       </div>
       {stock.TimeToBuy ? (
         <div className={styles.buy}>Time to Buy</div>

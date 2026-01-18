@@ -16,7 +16,9 @@ export default function GapReversal() {
 
   //לאסוף את כל המניות שיש עליהם מידע מיוחד או שעשו דיווח
   const CheckStocks = async () => {
+    //Iran
     IsBullishReversal("AGIG");
+    IsBullishReversal("INDO");
   };
 
   const IsBullishReversal = async (symbol: string) => {
