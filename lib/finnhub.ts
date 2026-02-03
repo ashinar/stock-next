@@ -9,14 +9,19 @@ export type StockData = {
   Img?: string;
   TimeToBuy: boolean;
   IsUp: boolean;
+  Description?: string;
 };
 
-export async function getStock(symbol: string, img?: string) {
+export async function getStock(
+  symbol: string,
+  img?: string,
+  description?: string,
+) {
   const apiKey = "d431ai1r01qvk0j9nnigd431ai1r01qvk0j9nnj0";
 
   const res = await fetch(
     `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${apiKey}`,
-    { cache: "no-store" }
+    { cache: "no-store" },
   );
 
   if (!res.ok) {
@@ -34,7 +39,8 @@ export async function getStock(symbol: string, img?: string) {
     Symbol: symbol,
     Img: img,
     TimeToBuy: false,
-    IsUp: data.d > 0,
+    IsUp: data.c > data.o,
+    Description: description,
   };
 
   if (!stock?.CurrentPrice) {
@@ -42,7 +48,7 @@ export async function getStock(symbol: string, img?: string) {
 
     console.warn(
       "%c⚠️" + msg,
-      "background:#ff9800;color:#000;font-weight:bold;padding:6px 10px;border-radius:4px;"
+      "background:#ff9800;color:#000;font-weight:bold;padding:6px 10px;border-radius:4px;",
     );
 
     return null;

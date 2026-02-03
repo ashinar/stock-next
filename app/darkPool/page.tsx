@@ -3,43 +3,52 @@ import Stocks from "@/components/stcoks/stocks";
 import { getStock, StockData } from "@/lib/finnhub";
 import { useState, useEffect, useRef } from "react";
 
-export default function GapReversal() {
+export default function DarkPool() {
   const didRun = useRef(false);
 
   const [stocks, setStocks] = useState<StockData[]>([]);
   useEffect(() => {
     if (!didRun.current) {
       didRun.current = true;
-      CheckStocks();
+      loadstocks();
     }
   }, []);
 
-  //לאסוף את כל המניות שיש עליהם מידע מיוחד או שעשו דיווח
-  const CheckStocks = async () => {
-    //Iran
-    IsBullishReversal("AGIG");
-    IsBullishReversal("INDO");
+  const loadstocks = async (): Promise<void> => {
+    //26.1.26
+    CheckStocks(
+      "HYMC",
+      true,
+      52,
+      undefined,
+      "‏מניה שקשורה למתכות נדירות ומינרלים ‏מרימה ראש בתקופה האחרונה ונראה שהיא רוצה להמשיך לדחוף ‏כל האזורים הכתומים הם גאפים‏.לדעתי אם היא ממשיכה ככה יכולה להגיע לגאפ העליון ב-70 דולר השבוע!",
+    );
 
-    //ידיעות
-    IsBullishReversal("TSLA");
+    //26.1.26
+    CheckStocks("ASTS", true, 120);
 
-    //דוחות אחרי יום שישי
-    IsBullishReversal("NFLX");
-    IsBullishReversal("IBKR");
+    //27.1.26
+    CheckStocks("CRWV", true, 107);
+    CheckStocks("APLD", true, 40);
   };
 
-  const IsBullishReversal = async (symbol: string) => {
-    let stock = await getStock(symbol);
-    if (stock != null) {
-      //The Gap should be more than 4 but lest than  30
-      if (
-        stock.PreviousClose > stock.OpenPrice * 1.04 &&
-        stock.PreviousClose < stock.OpenPrice * 1.3
-      ) {
-        stock.TimeToBuy = true;
-      }
+  const CheckStocks = async (
+    symbol: string,
+    isUp: boolean,
+    price: number,
+    img?: string,
+    description?: string,
+  ) => {
+    debugger;
+    let stock = await getStock(symbol, img, description);
 
-      setStocks((prevItems) => [...prevItems, stock]);
+    if (stock != null) {
+      if (stock.IsUp && isUp && stock.CurrentPrice >= price) {
+        stock.TimeToBuy = true;
+        setStocks((prevItems) => [stock, ...prevItems]);
+      } else {
+        setStocks((prevItems) => [...prevItems, stock]);
+      }
     }
   };
 
@@ -61,7 +70,7 @@ export default function GapReversal() {
               color: "#222",
             }}
           >
-            Gap Reversal
+            Dark Pool Stocks
           </h1>
 
           <div
@@ -89,13 +98,30 @@ export default function GapReversal() {
               fontWeight: "520",
             }}
           >
-            January 6, 2026
+            January 27, 2026
           </span>
         </div>
       </div>
       {stocks.map((s) => (
         <Stocks key={s.Symbol} stock={s} />
       ))}
+
+      <div style={{ marginBottom: "10px" }}>
+        <span
+          style={{
+            fontSize: "16px",
+            padding: "4px 8px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            background: "#f7f7f7",
+            marginLeft: "20px",
+            display: "inline-block",
+            fontWeight: "520",
+          }}
+        >
+          January 27, 2026
+        </span>
+      </div>
     </div>
   );
 }

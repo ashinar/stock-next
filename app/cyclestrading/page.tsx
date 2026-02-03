@@ -15,32 +15,49 @@ export default function CyclesTrading() {
   }, []);
 
   const loadstocks_6_1_26 = async (): Promise<void> => {
-    CheckStocks("NFLX", true, 231); //TrendSpider
-    CheckStocks("AMD", true, 82); //TrendSpider
+    CheckStocks("FRPT", true, 72); //Amir
+    CheckStocks("USAR", true, 27.29); //Dark pool
 
-    CheckStocks("USAR", true, 18.5); //Dark pool
+    CheckStocks("NFLX", true, 87); //TrendSpider
+    CheckStocks("AMD", true, 254); //TrendSpider
 
-    let APLD = await getStock("APLD"); //Hagit
-    if (APLD != null) {
-      APLD.TimeToBuy = APLD.IsUp;
-      setStocks_6_1_26((prevItems) => [...prevItems, APLD]);
+    let NVDA = await getStock("NVDA"); //*cycle trading*
+    if (NVDA != null) {
+      NVDA.TimeToBuy = NVDA.IsUp && NVDA.CurrentPrice < 160;
+      setStocks_6_1_26((prevItems) => [...prevItems, NVDA]);
+    }
+
+    let AVGO = await getStock("AVGO"); //*cycle trading*
+    if (AVGO != null) {
+      AVGO.TimeToBuy = AVGO.IsUp && AVGO.CurrentPrice < 54;
+      setStocks_6_1_26((prevItems) => [...prevItems, AVGO]);
+    }
+
+    let IONQ = await getStock("IONQ"); //*cycle trading*
+    if (IONQ != null) {
+      IONQ.TimeToBuy = IONQ.IsUp && IONQ.CurrentPrice > 48;
+      setStocks_6_1_26((prevItems) => [...prevItems, IONQ]);
     }
 
     let EOSE = await getStock("EOSE"); //Dark pool
     if (EOSE != null) {
-      EOSE.TimeToBuy = EOSE.IsUp && EOSE.CurrentPrice > 14;
-      setStocks_6_1_26((prevItems) => [...prevItems, EOSE]);
+      EOSE.TimeToBuy = EOSE.IsUp && EOSE.CurrentPrice > 18;
+      setStocks_6_1_26((prevItems) =>
+        EOSE.TimeToBuy ? [EOSE, ...prevItems] : [...prevItems, EOSE],
+      );
     }
 
     let NVTS = await getStock("NVTS"); //Hagit
     if (NVTS != null) {
-      NVTS.TimeToBuy = NVTS.IsUp && NVTS.CurrentPrice > 10.07;
-      setStocks_6_1_26((prevItems) => [...prevItems, NVTS]);
+      NVTS.TimeToBuy = NVTS.IsUp && NVTS.CurrentPrice > 11;
+      setStocks_6_1_26((prevItems) =>
+        NVTS.TimeToBuy ? [NVTS, ...prevItems] : [...prevItems, NVTS],
+      );
     }
 
     let BABA = await getStock("BABA"); // TrendSpider
     if (BABA != null) {
-      BABA.TimeToBuy = BABA.IsUp && BABA.CurrentPrice > 148;
+      BABA.TimeToBuy = BABA.IsUp && BABA.CurrentPrice > 181;
       setStocks_6_1_26((prevItems) => [...prevItems, BABA]);
     }
 
@@ -52,37 +69,48 @@ export default function CyclesTrading() {
 
     let RGTI = await getStock("RGTI"); // cycle trading
     if (RGTI != null) {
-      RGTI.TimeToBuy = RGTI.CurrentPrice < 22 || RGTI.CurrentPrice > 26;
-      setStocks_6_1_26((prevItems) => [...prevItems, RGTI]);
+      RGTI.TimeToBuy = RGTI.IsUp && RGTI.CurrentPrice > 22;
+      setStocks_6_1_26((prevItems) =>
+        RGTI.TimeToBuy ? [RGTI, ...prevItems] : [...prevItems, RGTI],
+      );
     }
 
     let RKLB = await getStock("RKLB"); //*cycle trading*
     if (RKLB != null) {
-      RKLB.TimeToBuy = RKLB.CurrentPrice < 82 || RKLB.CurrentPrice > 86;
-      setStocks_6_1_26((prevItems) => [...prevItems, RKLB]);
+      RKLB.TimeToBuy = RKLB.CurrentPrice > 87;
+      setStocks_6_1_26((prevItems) =>
+        RKLB.TimeToBuy ? [RKLB, ...prevItems] : [...prevItems, RKLB],
+      );
     }
 
     let RYAAY = await getStock("RYAAY"); //*cycle trading*
     if (RYAAY != null) {
-      RYAAY.TimeToBuy = RYAAY.CurrentPrice < 68 || RYAAY.CurrentPrice > 74;
-      setStocks_6_1_26((prevItems) => [...prevItems, RYAAY]);
+      RYAAY.TimeToBuy = RYAAY.IsUp && RYAAY.CurrentPrice > 71;
+      setStocks_6_1_26((prevItems) =>
+        RYAAY.TimeToBuy ? [RYAAY, ...prevItems] : [...prevItems, RYAAY],
+      );
     }
 
     let ANET = await getStock("ANET"); //*cycle trading*
     if (ANET != null) {
-      ANET.TimeToBuy = ANET.IsUp && ANET.CurrentPrice > 131;
-      setStocks_6_1_26((prevItems) => [...prevItems, ANET]);
+      ANET.TimeToBuy = ANET.IsUp;
+      setStocks_6_1_26((prevItems) =>
+        ANET.TimeToBuy ? [ANET, ...prevItems] : [...prevItems, ANET],
+      );
     }
 
     let ORLY = await getStock("ORLY"); //*cycle trading*
     if (ORLY != null) {
-      ORLY.TimeToBuy = ORLY.CurrentPrice < 90 || ORLY.CurrentPrice > 92.17;
-      setStocks_6_1_26((prevItems) => [...prevItems, ORLY]);
+      ORLY.Description = "דיווח ב4.2";
+      ORLY.TimeToBuy = ORLY.IsUp;
+      setStocks_6_1_26((prevItems) =>
+        ORLY.TimeToBuy ? [ORLY, ...prevItems] : [...prevItems, ORLY],
+      );
     }
 
     let IREN = await getStock("IREN"); // Dark pool
     if (IREN != null) {
-      IREN.TimeToBuy = IREN.IsUp && IREN.CurrentPrice > 53;
+      IREN.TimeToBuy = IREN.IsUp && IREN.CurrentPrice > 59;
       setStocks_6_1_26((prevItems) => [...prevItems, IREN]);
     }
 
@@ -101,13 +129,13 @@ export default function CyclesTrading() {
 
     const ASTS = await getStock("ASTS");
     if (ASTS != null) {
-      ASTS.TimeToBuy = ASTS.IsUp; //Dark pool
+      ASTS.TimeToBuy = ASTS.IsUp && ASTS.CurrentPrice > 120; //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, ASTS]);
     }
 
     const CRML = await getStock("CRML");
     if (CRML != null) {
-      CRML.TimeToBuy = CRML.IsUp && CRML.CurrentPrice > 11; //Dark pool
+      CRML.TimeToBuy = CRML.IsUp && CRML.CurrentPrice > 19; //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, CRML]);
     }
   };
@@ -117,9 +145,10 @@ export default function CyclesTrading() {
     if (stock != null) {
       if (stock.IsUp && IsUp && stock.CurrentPrice >= price) {
         stock.TimeToBuy = true;
+        setStocks_6_1_26((prevItems) => [stock, ...prevItems]);
+      } else {
+        setStocks_6_1_26((prevItems) => [...prevItems, stock]);
       }
-
-      setStocks_6_1_26((prevItems) => [...prevItems, stock]);
     }
   };
 

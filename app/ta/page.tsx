@@ -16,6 +16,9 @@ export default function CyclesTrading() {
   }, []);
 
   const loadTAStocks = async (): Promise<void> => {
+    CheckStocks("MAXO", true, 2955);
+    CheckStocks("POLI", true, 7984);
+
     let ELAL = await getStock("ELAL");
     if (ELAL != null) {
       ELAL.TimeToBuy = ELAL.Change > 0 && ELAL.CurrentPrice > 1806;
@@ -55,6 +58,17 @@ export default function CyclesTrading() {
     if (PHOE != null) {
       PHOE.TimeToBuy = PHOE.Change > 0 && PHOE.CurrentPrice > 14000;
       setTaStocks((prevItems) => [...prevItems, PHOE]);
+    }
+  };
+
+  const CheckStocks = async (symbol: string, IsUp: boolean, price: number) => {
+    let stock = await getStock(symbol);
+    if (stock != null) {
+      if (stock.IsUp && IsUp && stock.CurrentPrice >= price) {
+        stock.TimeToBuy = true;
+      }
+
+      setTaStocks((prevItems) => [...prevItems, stock]);
     }
   };
 

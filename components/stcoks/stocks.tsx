@@ -22,7 +22,7 @@ export default function stocks({ stock }: { stock: StockData }) {
           />
         ) : null}
 
-        <div className={styles.symbol}>
+        <div className={styles.symbol} title={stock.Description}>
           <a
             onClick={() => {
               copyToClipboard();

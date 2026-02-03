@@ -10,6 +10,8 @@ export default function Home() {
       <Link href="/ta">Tel Aviv</Link>
       <br></br>
       <Link href="/GapReversal">Gap Reversal</Link>
+      <br></br>
+      <Link href="/darkPool">Dark Pool</Link>
     </>
   );
 }
