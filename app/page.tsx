@@ -7,7 +7,7 @@ export default function Home() {
       <br></br>
       <Link href="/cyclestrading">CyclesTrading</Link>
       <br></br>
-      <Link href="/ta">Tel Aviv</Link>
+      <Link href="/amir">Amir</Link>
       <br></br>
       <Link href="/GapReversal">Gap Reversal</Link>
       <br></br>

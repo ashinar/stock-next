@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 export default function CyclesTrading() {
   const didRun = useRef(false);
-  const [taStocks, setTaStocks] = useState<StockData[]>([]);
+  const [stocks, setStocks] = useState<StockData[]>([]);
 
   useEffect(() => {
     if (!didRun.current) {
@@ -16,59 +16,23 @@ export default function CyclesTrading() {
   }, []);
 
   const loadTAStocks = async (): Promise<void> => {
-    CheckStocks("MAXO", true, 2955);
-    CheckStocks("POLI", true, 7984);
-
-    let ELAL = await getStock("ELAL");
-    if (ELAL != null) {
-      ELAL.TimeToBuy = ELAL.Change > 0 && ELAL.CurrentPrice > 1806;
-      setTaStocks((prevItems) => [...prevItems, ELAL]);
-    }
-
-    let NXSN = await getStock("NXSN"); //NEXT VISION
-    if (NXSN != null) {
-      if (NXSN.CurrentPrice == 0) {
-        NXSN.CurrentPrice = 0;
-        NXSN.Percent = 0;
-        NXSN.TimeToBuy = true;
-      }
-      //NXSN.TimeToBuy = NXSN.Change > 0 && NXSN.CurrentPrice > 24900;
-      setTaStocks((prevItems) => [...prevItems, NXSN]);
-    }
-
-    let TSEM = await getStock("TSEM");
-    if (TSEM != null) {
-      TSEM.TimeToBuy = TSEM.Change > 0 && TSEM.CurrentPrice > 128;
-      setTaStocks((prevItems) => [...prevItems, TSEM]);
-    }
-
-    // let MVNE = await getStock("MVNE");
-    // if (MVNE != null) {
-    //   MVNE.TimeToBuy = MVNE.CurrentPrice < 112 || MVNE.CurrentPrice > 128;
-    //   setTaStocks((prevItems) => [...prevItems, MVNE]);
-    // }
-
-    let HARL = await getStock("HARL");
-    if (HARL != null) {
-      HARL.TimeToBuy = HARL.Change > 0 && HARL.CurrentPrice > 12990;
-      setTaStocks((prevItems) => [...prevItems, HARL]);
-    }
-
-    let PHOE = await getStock("PHOE");
-    if (PHOE != null) {
-      PHOE.TimeToBuy = PHOE.Change > 0 && PHOE.CurrentPrice > 14000;
-      setTaStocks((prevItems) => [...prevItems, PHOE]);
-    }
+    CheckStocks("MRNA", true, 55);
+    CheckStocks("KTOS", true, 134);
+    CheckStocks("OSCR", true, 23);
   };
 
   const CheckStocks = async (symbol: string, IsUp: boolean, price: number) => {
     let stock = await getStock(symbol);
     if (stock != null) {
-      if (stock.IsUp && IsUp && stock.CurrentPrice >= price) {
+      if (
+        (stock.IsUp && IsUp && stock.CurrentPrice >= price) ||
+        (!stock.IsUp && !IsUp && stock.CurrentPrice < price)
+      ) {
         stock.TimeToBuy = true;
+        setStocks((prevItems) => [stock, ...prevItems]);
+      } else {
+        setStocks((prevItems) => [...prevItems, stock]);
       }
-
-      setTaStocks((prevItems) => [...prevItems, stock]);
     }
   };
 
@@ -90,7 +54,7 @@ export default function CyclesTrading() {
               color: "#222",
             }}
           >
-            בורסת ת"א
+            Stocks
           </h1>
 
           <div
@@ -122,7 +86,7 @@ export default function CyclesTrading() {
           </span>
         </div>
       </div>
-      {taStocks && taStocks.map((s) => <Stocks key={s.Symbol} stock={s} />)}
+      {stocks && stocks.map((s) => <Stocks key={s.Symbol} stock={s} />)}
     </div>
   );
 }

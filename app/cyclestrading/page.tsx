@@ -43,6 +43,8 @@ export default function CyclesTrading() {
     CheckStocks("ANET", false, 115, setStocks_3_26);
 
     CheckStocksUpAndDown("AAOI", 103, 76, setStocks_3_26);
+    CheckStocksUpAndDown("TSM", 379, 312, setStocks_3_26);
+    CheckStocks("KTOS", true, 87, setStocks_3_26);
 
     /*let HOOD = await getStock("HOOD"); //Dark pool
     if (HOOD != null) {
