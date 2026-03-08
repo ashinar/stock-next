@@ -22,9 +22,8 @@ export default function CyclesTrading() {
     CheckStocks("LMND", true, 47, setStocks_3_26);
     CheckStocks("RKLB", false, 63, setStocks_3_26);
     CheckStocks("NFLX", true, 100, setStocks_3_26);
-    //PLTR
-    CheckStocks("PLTR", true, 161, setStocks_3_26);
-    CheckStocks("PLTR", false, 130, setStocks_3_26);
+
+    CheckStocksUpAndDown("PLTR", 161, 130, setStocks_3_26);
 
     CheckStocks("PNC", true, 216, setStocks_3_26);
     CheckStocks("GOOGL", false, 269, setStocks_3_26);
@@ -32,10 +31,9 @@ export default function CyclesTrading() {
     CheckStocks("AMD", true, 187, setStocks_3_26);
     CheckStocks("HON", true, 228, setStocks_3_26);
     CheckStocks("MP", true, 66, setStocks_3_26);
-    //UUUU
-    CheckStocks("UUUU", true, 27, setStocks_3_26);
-    CheckStocks("UUUU", false, 12, setStocks_3_26);
-    //open
+
+    CheckStocksUpAndDown("UUUU", 27, 12, setStocks_3_26);
+
     CheckStocks("OPEN", true, 5.21, setStocks_3_26);
     CheckStocks("SEDG", true, 28, setStocks_3_26);
     CheckStocks("OKLO", true, 58, setStocks_3_26);
@@ -43,9 +41,8 @@ export default function CyclesTrading() {
     CheckStocks("MSFT", true, 381, setStocks_3_26);
     CheckStocks("AMAT", false, 287, setStocks_3_26);
     CheckStocks("ANET", false, 115, setStocks_3_26);
-    //AAOI
-    CheckStocks("AAOI", true, 103, setStocks_3_26);
-    CheckStocks("AAOI", false, 76, setStocks_3_26);
+
+    CheckStocksUpAndDown("AAOI", 103, 76, setStocks_3_26);
 
     /*let HOOD = await getStock("HOOD"); //Dark pool
     if (HOOD != null) {
@@ -90,8 +87,7 @@ export default function CyclesTrading() {
 
     //7.2.26
     CheckStocks("NKE", true, 63.92); //trendspider
-    //4.2.26
-    CheckStocks("PLTR", true, 142); //*cycle trading*
+
     //4.2.26
     CheckStocks("RKLB", true, 80.3); //*cycle trading*
     //4.2.26
@@ -190,6 +186,26 @@ export default function CyclesTrading() {
       CRML.TimeToBuy = CRML.IsUp && CRML.CurrentPrice > 19; //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, CRML]);
     }*/
+  };
+
+  const CheckStocksUpAndDown = async (
+    symbol: string,
+    upPrice: number,
+    downPrice: number,
+    setStock: React.Dispatch<React.SetStateAction<StockData[]>>,
+  ) => {
+    let stock = await getStock(symbol);
+    if (stock != null) {
+      if (
+        (stock.IsUp && stock.CurrentPrice >= upPrice) ||
+        (!stock.IsUp && stock.CurrentPrice < downPrice)
+      ) {
+        stock.TimeToBuy = true;
+        setStock((prevItems) => [stock, ...prevItems]);
+      } else {
+        setStock((prevItems) => [...prevItems, stock]);
+      }
+    }
   };
 
   const CheckStocks = async (
