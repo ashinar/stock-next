@@ -6,20 +6,102 @@ import { useState, useEffect, useRef } from "react";
 export default function CyclesTrading() {
   const didRun = useRef(false);
 
-  const [stocks_6_1_26, setStocks_6_1_26] = useState<StockData[]>([]);
+  const [stocks_3_26, setStocks_3_26] = useState<StockData[]>([]);
   useEffect(() => {
     if (!didRun.current) {
       didRun.current = true;
-      loadstocks_6_1_26();
+      loadstocks_3_26();
     }
   }, []);
 
-  const loadstocks_6_1_26 = async (): Promise<void> => {
+  const loadstocks_3_26 = async (): Promise<void> => {
+    CheckStocks("SOFI", true, 19.5, setStocks_3_26);
+    CheckStocks("SOXX", true, 334, setStocks_3_26);
+    CheckStocks("LRCX", false, 57, setStocks_3_26);
+    CheckStocks("AMZN", true, 223, setStocks_3_26);
+    CheckStocks("LMND", true, 47, setStocks_3_26);
+    CheckStocks("RKLB", false, 63, setStocks_3_26);
+    CheckStocks("NFLX", true, 100, setStocks_3_26);
+    //PLTR
+    CheckStocks("PLTR", true, 161, setStocks_3_26);
+    CheckStocks("PLTR", false, 130, setStocks_3_26);
+
+    CheckStocks("PNC", true, 216, setStocks_3_26);
+    CheckStocks("GOOGL", false, 269, setStocks_3_26);
+    CheckStocks("WDC", false, 200, setStocks_3_26);
+    CheckStocks("AMD", true, 187, setStocks_3_26);
+    CheckStocks("HON", true, 228, setStocks_3_26);
+    CheckStocks("MP", true, 66, setStocks_3_26);
+    //UUUU
+    CheckStocks("UUUU", true, 27, setStocks_3_26);
+    CheckStocks("UUUU", false, 12, setStocks_3_26);
+    //open
+    CheckStocks("OPEN", true, 5.21, setStocks_3_26);
+    CheckStocks("SEDG", true, 28, setStocks_3_26);
+    CheckStocks("OKLO", true, 58, setStocks_3_26);
+
+    CheckStocks("MSFT", true, 381, setStocks_3_26);
+    CheckStocks("AMAT", false, 287, setStocks_3_26);
+    CheckStocks("ANET", false, 115, setStocks_3_26);
+    //AAOI
+    CheckStocks("AAOI", true, 103, setStocks_3_26);
+    CheckStocks("AAOI", false, 76, setStocks_3_26);
+
+    /*let HOOD = await getStock("HOOD"); //Dark pool
+    if (HOOD != null) {
+      HOOD.TimeToBuy = HOOD.IsUp && HOOD.CurrentPrice < 78;
+      setStocks_6_1_26((prevItems) => [...prevItems, HOOD]);
+    }
+
+    let ARM = await getStock("ARM"); //Dark pool
+    if (ARM != null) {
+      ARM.TimeToBuy = ARM.IsUp && ARM.CurrentPrice < 123;
+      setStocks_6_1_26((prevItems) => [...prevItems, ARM]);
+    }
+
+    let RR = await getStock("RR"); //Dark pool
+    if (RR != null) {
+      RR.TimeToBuy = RR.IsUp && RR.CurrentPrice < 3.42;
+      setStocks_6_1_26((prevItems) => [...prevItems, RR]);
+    }
+
+    let USAR = await getStock("USAR"); //Dark pool
+    if (USAR != null) {
+      USAR.TimeToBuy = USAR.IsUp && USAR.CurrentPrice < 21;
+      setStocks_6_1_26((prevItems) => [...prevItems, USAR]);
+    }
+
+    let APLD = await getStock("APLD"); //Dark pool
+    if (APLD != null) {
+      APLD.TimeToBuy = APLD.IsUp && APLD.CurrentPrice < 32.1;
+      setStocks_6_1_26((prevItems) => [...prevItems, APLD]);
+    }
+
+    let NBIS = await getStock("NBIS"); //Dark pool
+    if (NBIS != null) {
+      NBIS.TimeToBuy = NBIS.IsUp && NBIS.CurrentPrice < 73.77;
+      setStocks_6_1_26((prevItems) => [...prevItems, NBIS]);
+    }
+
+    //8.2.26
+    CheckStocks("AAPL", true, 278); //Dark pool
+    //7.2.26
+    CheckStocks("POR", true, 51.58); //Amir
+
+    //7.2.26
+    CheckStocks("NKE", true, 63.92); //trendspider
+    //4.2.26
+    CheckStocks("PLTR", true, 142); //*cycle trading*
+    //4.2.26
+    CheckStocks("RKLB", true, 80.3); //*cycle trading*
+    //4.2.26
+    CheckStocks("RDDT", true, 164); //*cycle trading*
+
     CheckStocks("FRPT", true, 72); //Amir
     CheckStocks("USAR", true, 27.29); //Dark pool
 
-    CheckStocks("NFLX", true, 87); //TrendSpider
-    CheckStocks("AMD", true, 254); //TrendSpider
+
+
 
     let NVDA = await getStock("NVDA"); //*cycle trading*
     if (NVDA != null) {
@@ -31,12 +113,6 @@ export default function CyclesTrading() {
     if (AVGO != null) {
       AVGO.TimeToBuy = AVGO.IsUp && AVGO.CurrentPrice < 54;
       setStocks_6_1_26((prevItems) => [...prevItems, AVGO]);
-    }
-
-    let IONQ = await getStock("IONQ"); //*cycle trading*
-    if (IONQ != null) {
-      IONQ.TimeToBuy = IONQ.IsUp && IONQ.CurrentPrice > 48;
-      setStocks_6_1_26((prevItems) => [...prevItems, IONQ]);
     }
 
     let EOSE = await getStock("EOSE"); //Dark pool
@@ -61,11 +137,6 @@ export default function CyclesTrading() {
       setStocks_6_1_26((prevItems) => [...prevItems, BABA]);
     }
 
-    let OPEN = await getStock("OPEN"); // Dark ppl
-    if (OPEN != null) {
-      OPEN.TimeToBuy = OPEN.IsUp && OPEN.CurrentPrice > 6.73;
-      setStocks_6_1_26((prevItems) => [...prevItems, OPEN]);
-    }
 
     let RGTI = await getStock("RGTI"); // cycle trading
     if (RGTI != null) {
@@ -75,29 +146,15 @@ export default function CyclesTrading() {
       );
     }
 
-    let RKLB = await getStock("RKLB"); //*cycle trading*
-    if (RKLB != null) {
-      RKLB.TimeToBuy = RKLB.CurrentPrice > 87;
-      setStocks_6_1_26((prevItems) =>
-        RKLB.TimeToBuy ? [RKLB, ...prevItems] : [...prevItems, RKLB],
-      );
-    }
-
     let RYAAY = await getStock("RYAAY"); //*cycle trading*
     if (RYAAY != null) {
-      RYAAY.TimeToBuy = RYAAY.IsUp && RYAAY.CurrentPrice > 71;
+      RYAAY.TimeToBuy = RYAAY.IsUp && RYAAY.CurrentPrice > 71.7;
       setStocks_6_1_26((prevItems) =>
         RYAAY.TimeToBuy ? [RYAAY, ...prevItems] : [...prevItems, RYAAY],
       );
     }
 
-    let ANET = await getStock("ANET"); //*cycle trading*
-    if (ANET != null) {
-      ANET.TimeToBuy = ANET.IsUp;
-      setStocks_6_1_26((prevItems) =>
-        ANET.TimeToBuy ? [ANET, ...prevItems] : [...prevItems, ANET],
-      );
-    }
+
 
     let ORLY = await getStock("ORLY"); //*cycle trading*
     if (ORLY != null) {
@@ -114,12 +171,7 @@ export default function CyclesTrading() {
       setStocks_6_1_26((prevItems) => [...prevItems, IREN]);
     }
 
-    const OKLO = await getStock("OKLO");
-    if (OKLO != null) {
-      OKLO.TimeToBuy = OKLO.IsUp && OKLO.CurrentPrice > 94; //Dark pool
-      setStocks_6_1_26((prevItems) => [...prevItems, OKLO]);
-    }
-
+ 
     const ONDS = await getStock("ONDS");
     if (ONDS != null) {
       ONDS.TimeToBuy =
@@ -137,17 +189,25 @@ export default function CyclesTrading() {
     if (CRML != null) {
       CRML.TimeToBuy = CRML.IsUp && CRML.CurrentPrice > 19; //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, CRML]);
-    }
+    }*/
   };
 
-  const CheckStocks = async (symbol: string, IsUp: boolean, price: number) => {
+  const CheckStocks = async (
+    symbol: string,
+    IsUp: boolean,
+    price: number,
+    setStock: React.Dispatch<React.SetStateAction<StockData[]>>,
+  ) => {
     let stock = await getStock(symbol);
     if (stock != null) {
-      if (stock.IsUp && IsUp && stock.CurrentPrice >= price) {
+      if (
+        (stock.IsUp && IsUp && stock.CurrentPrice >= price) ||
+        (!stock.IsUp && !IsUp && stock.CurrentPrice < price)
+      ) {
         stock.TimeToBuy = true;
-        setStocks_6_1_26((prevItems) => [stock, ...prevItems]);
+        setStock((prevItems) => [stock, ...prevItems]);
       } else {
-        setStocks_6_1_26((prevItems) => [...prevItems, stock]);
+        setStock((prevItems) => [...prevItems, stock]);
       }
     }
   };
@@ -198,11 +258,11 @@ export default function CyclesTrading() {
               fontWeight: "520",
             }}
           >
-            January 6, 2026
+            March 2026
           </span>
         </div>
       </div>
-      {stocks_6_1_26.map((s) => (
+      {stocks_3_26.map((s) => (
         <Stocks key={s.Symbol} stock={s} />
       ))}
 

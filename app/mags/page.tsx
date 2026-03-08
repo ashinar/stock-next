@@ -18,13 +18,6 @@ export default async function Mags() {
     stocks.push(stock);
   }
 
-  // stock = await getStock("AAPL", "/stocks/AAPL.png");
-  // if (stock != null) {
-  //   stock.TimeToBuy = stock.CurrentPrice > 328 || stock.CurrentPrice < 320;
-
-  //   stocks.push(stock);
-  // }
-
   return (
     <div>
       {stocks.map((s) => (
