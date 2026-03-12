@@ -5,13 +5,24 @@ const TICKERS = ["MRNA"];
 const API_KEY = process.env.FMP_API_KEY || "8OjFIRUUXYFUbSLsgI4EKN38d8wNoLWo";
 
 export async function GET() {
+  let error = "";
+
   const results = await Promise.all(
     TICKERS.map(async (ticker) => {
+      if (error) {
+        return;
+      }
       const res = await fetch(
         `https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=${ticker}&apikey=${API_KEY}`,
       );
 
       const data = await res.json();
+      if (data && data["Error Message"]) {
+        console.log("Error Message", data["Error Message"]);
+        error = data["Error Message"];
+        return;
+      }
+
       const isCup = detectCup(data);
 
       return {
@@ -21,6 +32,10 @@ export async function GET() {
     }),
   );
 
+  if (error) {
+    return Response.json({ error });
+  }
+
   return Response.json(results);
 }
 
@@ -28,8 +43,6 @@ function detectCup(candles: any[]) {
   if (!candles || candles.length < 180) {
     return false;
   }
-
-  candles = candles.slice(0, 400);
 
   let bPrice = 0;
   let minPrice = 0;
@@ -40,8 +53,10 @@ function detectCup(candles: any[]) {
     let candle = candles[i];
 
     if (candle.high > maxPrice) {
-      maxPrice = candle.high;
+      bPrice = 0;
       count = 0;
+      minPrice = 0;
+      maxPrice = candle.high;
     } else {
       count++;
       if (!minPrice || minPrice > candle.low) {
