@@ -12,6 +12,8 @@ export default function Home() {
       <Link href="/GapReversal">Gap Reversal</Link>
       <br></br>
       <Link href="/darkPool">Dark Pool</Link>
+      <br></br>
+      <Link href="/stockIdeas">stockIdeas</Link>
     </>
   );
 }
