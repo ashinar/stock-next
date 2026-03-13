@@ -3,6 +3,11 @@ import Stocks from "@/components/stcoks/stocks";
 import { getStock, StockData } from "@/lib/finnhub";
 import { useState, useEffect, useRef } from "react";
 
+/*buy: 
+AAOI
+SOXX
+*/
+
 export default function CyclesTrading() {
   const didRun = useRef(false);
 
@@ -15,11 +20,16 @@ export default function CyclesTrading() {
   }, []);
 
   const loadstocks_3_26 = async (): Promise<void> => {
+    IsStockLowAbovePrice("AMD", 188, setStocks_3_26);
+    IsStockLowAbovePrice("LMND", 48, setStocks_3_26);
+
     CheckStocks("SOFI", true, 19.5, setStocks_3_26);
-    CheckStocks("SOXX", true, 334, setStocks_3_26);
+    CheckStocks("GS", true, 840, setStocks_3_26);
+    CheckStocks("VLO", true, 207, setStocks_3_26);
+
     CheckStocks("LRCX", false, 57, setStocks_3_26);
     CheckStocks("AMZN", true, 223, setStocks_3_26);
-    CheckStocks("LMND", true, 47, setStocks_3_26);
+
     CheckStocks("RKLB", false, 63, setStocks_3_26);
     CheckStocks("NFLX", true, 100, setStocks_3_26);
 
@@ -28,21 +38,20 @@ export default function CyclesTrading() {
     CheckStocks("PNC", true, 216, setStocks_3_26);
     CheckStocks("GOOGL", false, 269, setStocks_3_26);
     CheckStocks("WDC", false, 200, setStocks_3_26);
-    CheckStocks("AMD", true, 187, setStocks_3_26);
-    CheckStocks("HON", true, 228, setStocks_3_26);
+
+    CheckStocks("HON", false, 300, setStocks_3_26);
     CheckStocks("MP", true, 66, setStocks_3_26);
 
     CheckStocksUpAndDown("UUUU", 27, 12, setStocks_3_26);
 
     CheckStocks("OPEN", true, 5.21, setStocks_3_26);
-    CheckStocks("SEDG", true, 28, setStocks_3_26);
-    CheckStocks("OKLO", true, 58, setStocks_3_26);
+    CheckStocks("SEDG", false, 35, setStocks_3_26);
+    CheckStocks("OKLO", true, 63, setStocks_3_26);
 
     CheckStocks("MSFT", true, 381, setStocks_3_26);
     CheckStocks("AMAT", false, 287, setStocks_3_26);
     CheckStocks("ANET", false, 115, setStocks_3_26);
 
-    CheckStocksUpAndDown("AAOI", 103, 76, setStocks_3_26);
     CheckStocksUpAndDown("TSM", 379, 312, setStocks_3_26);
     CheckStocks("KTOS", true, 87, setStocks_3_26);
 
@@ -190,6 +199,21 @@ export default function CyclesTrading() {
     }*/
   };
 
+  const IsStockLowAbovePrice = async (
+    symbol: string,
+    price: number,
+    setStock: React.Dispatch<React.SetStateAction<StockData[]>>,
+  ) => {
+    let stock = await getStock(symbol);
+    if (stock != null) {
+      if (stock.Low <= price) {
+        setStock((prevItems) => [stock, ...prevItems]);
+      } else {
+        setStock((prevItems) => [...prevItems, stock]);
+      }
+    }
+  };
+
   const CheckStocksUpAndDown = async (
     symbol: string,
     upPrice: number,
@@ -200,7 +224,7 @@ export default function CyclesTrading() {
     if (stock != null) {
       if (
         (stock.IsUp && stock.CurrentPrice >= upPrice) ||
-        (!stock.IsUp && stock.CurrentPrice < downPrice)
+        stock.CurrentPrice < downPrice
       ) {
         stock.TimeToBuy = true;
         setStock((prevItems) => [stock, ...prevItems]);

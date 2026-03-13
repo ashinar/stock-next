@@ -19,6 +19,10 @@ export default function CyclesTrading() {
     CheckStocks("MRNA", true, 55);
     CheckStocks("KTOS", true, 134);
     CheckStocks("OSCR", true, 23);
+
+    CheckStocks("AA", true, 68);
+    CheckStocks("AAOI", false, 115);
+    CheckStocks("ADI", true, 313);
   };
 
   const CheckStocks = async (symbol: string, IsUp: boolean, price: number) => {
@@ -26,7 +30,7 @@ export default function CyclesTrading() {
     if (stock != null) {
       if (
         (stock.IsUp && IsUp && stock.CurrentPrice >= price) ||
-        (!stock.IsUp && !IsUp && stock.CurrentPrice < price)
+        (!stock.IsUp && stock.CurrentPrice < price)
       ) {
         stock.TimeToBuy = true;
         setStocks((prevItems) => [stock, ...prevItems]);
@@ -82,7 +86,7 @@ export default function CyclesTrading() {
               fontWeight: "520",
             }}
           >
-            TA
+            Amir
           </span>
         </div>
       </div>

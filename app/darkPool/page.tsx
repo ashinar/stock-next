@@ -3,6 +3,12 @@ import Stocks from "@/components/stcoks/stocks";
 import { getStock, StockData } from "@/lib/finnhub";
 import { useState, useEffect, useRef } from "react";
 
+/*buy
+ SNDK
+ SOXX
+CRML
+SNDK
+*/
 export default function DarkPool() {
   const didRun = useRef(false);
 
@@ -15,35 +21,27 @@ export default function DarkPool() {
   }, []);
 
   const loadstocks = async (): Promise<void> => {
-    //26.1.26
-    CheckStocks(
-      "HYMC",
-      true,
-      52,
-      undefined,
-      "‏מניה שקשורה למתכות נדירות ומינרלים ‏מרימה ראש בתקופה האחרונה ונראה שהיא רוצה להמשיך לדחוף ‏כל האזורים הכתומים הם גאפים‏.לדעתי אם היא ממשיכה ככה יכולה להגיע לגאפ העליון ב-70 דולר השבוע!",
-    );
+    CheckStocks("SOFI", true, 18);
 
-    //26.1.26
-    CheckStocks("ASTS", true, 120);
+    CheckStocks("IREN", false, 36);
+    CheckStocks("KTOS", true, 81);
+    CheckStocks("HIMS", true, 13);
+    CheckStocks("ONDS", false, 9.8);
+    CheckStocks("IONQ", false, 35);
 
-    //27.1.26
-    CheckStocks("CRWV", true, 107);
-    CheckStocks("APLD", true, 40);
+    CheckStocks("OSS", true, 9.5);
+    CheckStocks("OKLO", false, 58);
+    CheckStocks("PLTR", false, 148);
+    CheckStocks("SNDK", true, 538);
   };
 
-  const CheckStocks = async (
-    symbol: string,
-    isUp: boolean,
-    price: number,
-    img?: string,
-    description?: string,
-  ) => {
-    debugger;
-    let stock = await getStock(symbol, img, description);
-
+  const CheckStocks = async (symbol: string, IsUp: boolean, price: number) => {
+    let stock = await getStock(symbol);
     if (stock != null) {
-      if (stock.IsUp && isUp && stock.CurrentPrice >= price) {
+      if (
+        (stock.IsUp && IsUp && stock.CurrentPrice >= price) ||
+        (!stock.IsUp && !IsUp && stock.CurrentPrice < price)
+      ) {
         stock.TimeToBuy = true;
         setStocks((prevItems) => [stock, ...prevItems]);
       } else {

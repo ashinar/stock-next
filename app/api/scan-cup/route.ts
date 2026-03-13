@@ -1,26 +1,43 @@
 //http://localhost:3000/api/scan-cup
 //https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=AAPL&apikey=8OjFIRUUXYFUbSLsgI4EKN38d8wNoLWo
 
-const TICKERS = ["MRNA"];
+import redis from "@/lib/redis/redis";
+
+const TICKERS = ["MRNA", "KTOS"];
 const API_KEY = process.env.FMP_API_KEY || "8OjFIRUUXYFUbSLsgI4EKN38d8wNoLWo";
 
 export async function GET() {
   let error = "";
+  TICKERS.map(async (ticker) => {});
 
   const results = await Promise.all(
     TICKERS.map(async (ticker) => {
       if (error) {
         return;
       }
-      const res = await fetch(
-        `https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=${ticker}&apikey=${API_KEY}`,
-      );
 
-      const data = await res.json();
-      if (data && data["Error Message"]) {
-        console.log("Error Message", data["Error Message"]);
-        error = data["Error Message"];
-        return;
+      let data = [];
+      const redisKey = `stocks_historical:${ticker}`;
+      let cached = await redis.get(redisKey);
+
+      if (cached) {
+        console.log(`${ticker} loaded from redis`);
+        data = JSON.parse(cached);
+      } else {
+        const res = await fetch(
+          `https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=${ticker}&apikey=${API_KEY}`,
+        );
+
+        data = await res.json();
+        if (data && data.ok) {
+          if (data["Error Message"]) {
+            console.log("Error Message", data["Error Message"]);
+            error = data["Error Message"];
+            return;
+          } else {
+            await redis.set(redisKey, JSON.stringify(data), "EX", 60 * 60 * 6); //saved on redis for 6 hours
+          }
+        }
       }
 
       const isCup = detectCup(data);
