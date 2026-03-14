@@ -61,6 +61,7 @@ export async function GET() {
     arrStocks.push({
       symbol,
       description: "There may be a trend reversal, need Price Structure",
+      percentage: stock.changePercentage.toFixed(2),
     });
   }
 
