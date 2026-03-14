@@ -81,11 +81,19 @@ export default function StockIdea() {
                   marginBottom: "10px",
                 }}
               >
-                <h2 style={{ margin: 0, color: "#0d3b66" }}>{stock.symbol}</h2>
+                <h2 style={{ margin: 0, color: "#0d3b66" }}>
+                  {" "}
+                  <a
+                    target="_blank"
+                    href={`https://www.tradingview.com/chart/jRahCSDc/?symbol=${stock.symbol}`}
+                  >
+                    {stock.symbol}
+                  </a>
+                </h2>
                 {stock.percentage && (
                   <span
                     style={{
-                      background: "#ffb400",
+                      background: stock.percentage < 0 ? "#e74c3c" : "#2ecc71",
                       padding: "4px 10px",
                       borderRadius: "8px",
                       color: "#fff",
