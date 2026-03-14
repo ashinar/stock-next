@@ -16,7 +16,7 @@ export async function getFinancialModelStock(symbol: string) {
 
   let data = await res.json();
   if (data && data.length) {
-    await redis.set(redisKey, JSON.stringify(data[0]), "EX", 60 * 60 * 6); //saved on redis for 6 hours
+    await redis.set(redisKey, JSON.stringify(data[0]), "EX", 60 * 60 * 0.5); //saved on redis for 0.5 hour (half hour)
   }
 
   return data;
