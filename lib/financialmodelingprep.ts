@@ -2,7 +2,7 @@ import redis from "@/lib/redis/redis";
 const API_KEY = process.env.FMP_API_KEY || "8OjFIRUUXYFUbSLsgI4EKN38d8wNoLWo";
 
 export async function getFinancialModelStock(symbol: string) {
-  const redisKey = `stocks:financialModelStockV1:profile${symbol}`;
+  const redisKey = `stocks:financialModelStock:profile:${symbol}`;
   let cached = await redis.get(redisKey);
 
   if (cached) {
