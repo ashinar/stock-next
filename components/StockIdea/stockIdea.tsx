@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./stockIdea.module.css";
 
 type Stock = {
   symbol: string;
@@ -82,8 +83,8 @@ export default function StockIdea() {
                 }}
               >
                 <h2 style={{ margin: 0, color: "#0d3b66" }}>
-                  {" "}
                   <a
+                    className={styles.stockLink}
                     target="_blank"
                     href={`https://www.tradingview.com/chart/jRahCSDc/?symbol=${stock.symbol}`}
                   >
