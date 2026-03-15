@@ -91,6 +91,21 @@ export async function GET() {
     });
   }
 
+  symbol = "LMND";
+  stock = await getFinancialModelStock(symbol);
+  fStock = await getFinnhubStock(symbol);
+
+  if (
+    (stock && stock.price > 56) ||
+    (fStock && fStock.Low < 48 && fStock.IsUp)
+  ) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.changePercentage.toFixed(2),
+    });
+  }
+
   //symbol = "AAOI";
   return Response.json({ stocks: arrStocks });
 }
