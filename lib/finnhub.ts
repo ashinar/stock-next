@@ -1,3 +1,5 @@
+import redis from "@/lib/redis/redis";
+
 export type StockData = {
   CurrentPrice: number;
   Change: number;
@@ -12,11 +14,18 @@ export type StockData = {
   Description?: string;
 };
 
-export async function getStock(
+export async function getFinnhubStock(
   symbol: string,
   img?: string,
   description?: string,
 ) {
+  const redisKey = `stocks:finnhub:${symbol}`;
+  let cached = await redis.get(redisKey);
+  if (cached) {
+    console.log(`finnhub - ${symbol} loaded from redis`);
+    return JSON.parse(cached);
+  }
+
   const apiKey = "d431ai1r01qvk0j9nnigd431ai1r01qvk0j9nnj0";
 
   const res = await fetch(
@@ -52,6 +61,10 @@ export async function getStock(
     );
 
     return null;
+  }
+
+  if (stock) {
+    await redis.set(redisKey, JSON.stringify(stock), "EX", 60 * 60 * 0.1); //saved on redis for 0.1 hour (6 mins)
   }
 
   return stock;

@@ -3,6 +3,7 @@
 
 import stocks from "@/components/stcoks/stocks";
 import { getFinancialModelStock } from "@/lib/financialmodelingprep";
+import { getFinnhubStock } from "@/lib/finnhub";
 
 export async function GET() {
   let arrStocks = [];
@@ -65,5 +66,31 @@ export async function GET() {
     });
   }
 
+  symbol = "AAOI";
+  stock = await getFinancialModelStock(symbol);
+  if (stock.price > 114) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.changePercentage.toFixed(2),
+    });
+  }
+
+  symbol = "AMD";
+  stock = await getFinancialModelStock(symbol);
+  let fStock = await getFinnhubStock(symbol);
+
+  if (
+    (stock && stock.price > 199) ||
+    (fStock && fStock.Low < 188 && fStock.IsUp)
+  ) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.changePercentage.toFixed(2),
+    });
+  }
+
+  //symbol = "AAOI";
   return Response.json({ stocks: arrStocks });
 }

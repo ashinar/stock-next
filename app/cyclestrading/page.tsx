@@ -1,12 +1,7 @@
 "use client";
 import Stocks from "@/components/stcoks/stocks";
-import { getStock, StockData } from "@/lib/finnhub";
+import { getFinnhubStock, StockData } from "@/lib/finnhub";
 import { useState, useEffect, useRef } from "react";
-
-/*buy: 
-AAOI
-SOXX
-*/
 
 export default function CyclesTrading() {
   const didRun = useRef(false);
@@ -55,37 +50,43 @@ export default function CyclesTrading() {
     CheckStocksUpAndDown("TSM", 379, 312, setStocks_3_26);
     CheckStocks("KTOS", true, 87, setStocks_3_26);
 
-    /*let HOOD = await getStock("HOOD"); //Dark pool
+    /*let HOOD = await getFinnhubStock
+("HOOD"); //Dark pool
     if (HOOD != null) {
       HOOD.TimeToBuy = HOOD.IsUp && HOOD.CurrentPrice < 78;
       setStocks_6_1_26((prevItems) => [...prevItems, HOOD]);
     }
 
-    let ARM = await getStock("ARM"); //Dark pool
+    let ARM = await getFinnhubStock
+("ARM"); //Dark pool
     if (ARM != null) {
       ARM.TimeToBuy = ARM.IsUp && ARM.CurrentPrice < 123;
       setStocks_6_1_26((prevItems) => [...prevItems, ARM]);
     }
 
-    let RR = await getStock("RR"); //Dark pool
+    let RR = await getFinnhubStock
+("RR"); //Dark pool
     if (RR != null) {
       RR.TimeToBuy = RR.IsUp && RR.CurrentPrice < 3.42;
       setStocks_6_1_26((prevItems) => [...prevItems, RR]);
     }
 
-    let USAR = await getStock("USAR"); //Dark pool
+    let USAR = await getFinnhubStock
+("USAR"); //Dark pool
     if (USAR != null) {
       USAR.TimeToBuy = USAR.IsUp && USAR.CurrentPrice < 21;
       setStocks_6_1_26((prevItems) => [...prevItems, USAR]);
     }
 
-    let APLD = await getStock("APLD"); //Dark pool
+    let APLD = await getFinnhubStock
+("APLD"); //Dark pool
     if (APLD != null) {
       APLD.TimeToBuy = APLD.IsUp && APLD.CurrentPrice < 32.1;
       setStocks_6_1_26((prevItems) => [...prevItems, APLD]);
     }
 
-    let NBIS = await getStock("NBIS"); //Dark pool
+    let NBIS = await getFinnhubStock
+("NBIS"); //Dark pool
     if (NBIS != null) {
       NBIS.TimeToBuy = NBIS.IsUp && NBIS.CurrentPrice < 73.77;
       setStocks_6_1_26((prevItems) => [...prevItems, NBIS]);
@@ -110,19 +111,22 @@ export default function CyclesTrading() {
 
 
 
-    let NVDA = await getStock("NVDA"); //*cycle trading*
+    let NVDA = await getFinnhubStock
+("NVDA"); //*cycle trading*
     if (NVDA != null) {
       NVDA.TimeToBuy = NVDA.IsUp && NVDA.CurrentPrice < 160;
       setStocks_6_1_26((prevItems) => [...prevItems, NVDA]);
     }
 
-    let AVGO = await getStock("AVGO"); //*cycle trading*
+    let AVGO = await getFinnhubStock
+("AVGO"); //*cycle trading*
     if (AVGO != null) {
       AVGO.TimeToBuy = AVGO.IsUp && AVGO.CurrentPrice < 54;
       setStocks_6_1_26((prevItems) => [...prevItems, AVGO]);
     }
 
-    let EOSE = await getStock("EOSE"); //Dark pool
+    let EOSE = await getFinnhubStock
+("EOSE"); //Dark pool
     if (EOSE != null) {
       EOSE.TimeToBuy = EOSE.IsUp && EOSE.CurrentPrice > 18;
       setStocks_6_1_26((prevItems) =>
@@ -130,7 +134,8 @@ export default function CyclesTrading() {
       );
     }
 
-    let NVTS = await getStock("NVTS"); //Hagit
+    let NVTS = await getFinnhubStock
+("NVTS"); //Hagit
     if (NVTS != null) {
       NVTS.TimeToBuy = NVTS.IsUp && NVTS.CurrentPrice > 11;
       setStocks_6_1_26((prevItems) =>
@@ -138,14 +143,16 @@ export default function CyclesTrading() {
       );
     }
 
-    let BABA = await getStock("BABA"); // TrendSpider
+    let BABA = await getFinnhubStock
+("BABA"); // TrendSpider
     if (BABA != null) {
       BABA.TimeToBuy = BABA.IsUp && BABA.CurrentPrice > 181;
       setStocks_6_1_26((prevItems) => [...prevItems, BABA]);
     }
 
 
-    let RGTI = await getStock("RGTI"); // cycle trading
+    let RGTI = await getFinnhubStock
+("RGTI"); // cycle trading
     if (RGTI != null) {
       RGTI.TimeToBuy = RGTI.IsUp && RGTI.CurrentPrice > 22;
       setStocks_6_1_26((prevItems) =>
@@ -153,7 +160,8 @@ export default function CyclesTrading() {
       );
     }
 
-    let RYAAY = await getStock("RYAAY"); //*cycle trading*
+    let RYAAY = await getFinnhubStock
+("RYAAY"); //*cycle trading*
     if (RYAAY != null) {
       RYAAY.TimeToBuy = RYAAY.IsUp && RYAAY.CurrentPrice > 71.7;
       setStocks_6_1_26((prevItems) =>
@@ -163,7 +171,8 @@ export default function CyclesTrading() {
 
 
 
-    let ORLY = await getStock("ORLY"); //*cycle trading*
+    let ORLY = await getFinnhubStock
+("ORLY"); //*cycle trading*
     if (ORLY != null) {
       ORLY.Description = "דיווח ב4.2";
       ORLY.TimeToBuy = ORLY.IsUp;
@@ -172,27 +181,31 @@ export default function CyclesTrading() {
       );
     }
 
-    let IREN = await getStock("IREN"); // Dark pool
+    let IREN = await getFinnhubStock
+("IREN"); // Dark pool
     if (IREN != null) {
       IREN.TimeToBuy = IREN.IsUp && IREN.CurrentPrice > 59;
       setStocks_6_1_26((prevItems) => [...prevItems, IREN]);
     }
 
  
-    const ONDS = await getStock("ONDS");
+    const ONDS = await getFinnhubStock
+("ONDS");
     if (ONDS != null) {
       ONDS.TimeToBuy =
         ONDS.IsUp && (ONDS.CurrentPrice < 11 || ONDS.CurrentPrice > 15); //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, ONDS]);
     }
 
-    const ASTS = await getStock("ASTS");
+    const ASTS = await getFinnhubStock
+("ASTS");
     if (ASTS != null) {
       ASTS.TimeToBuy = ASTS.IsUp && ASTS.CurrentPrice > 120; //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, ASTS]);
     }
 
-    const CRML = await getStock("CRML");
+    const CRML = await getFinnhubStock
+("CRML");
     if (CRML != null) {
       CRML.TimeToBuy = CRML.IsUp && CRML.CurrentPrice > 19; //Dark pool
       setStocks_6_1_26((prevItems) => [...prevItems, CRML]);
@@ -204,7 +217,7 @@ export default function CyclesTrading() {
     price: number,
     setStock: React.Dispatch<React.SetStateAction<StockData[]>>,
   ) => {
-    let stock = await getStock(symbol);
+    let stock = await getFinnhubStock(symbol);
     if (stock != null) {
       if (stock.Low <= price) {
         setStock((prevItems) => [stock, ...prevItems]);
@@ -220,7 +233,7 @@ export default function CyclesTrading() {
     downPrice: number,
     setStock: React.Dispatch<React.SetStateAction<StockData[]>>,
   ) => {
-    let stock = await getStock(symbol);
+    let stock = await getFinnhubStock(symbol);
     if (stock != null) {
       if (
         (stock.IsUp && stock.CurrentPrice >= upPrice) ||
@@ -240,7 +253,7 @@ export default function CyclesTrading() {
     price: number,
     setStock: React.Dispatch<React.SetStateAction<StockData[]>>,
   ) => {
-    let stock = await getStock(symbol);
+    let stock = await getFinnhubStock(symbol);
     if (stock != null) {
       if (
         (stock.IsUp && IsUp && stock.CurrentPrice >= price) ||
