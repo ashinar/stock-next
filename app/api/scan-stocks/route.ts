@@ -92,17 +92,55 @@ export async function GET() {
   }
 
   symbol = "LMND";
-  stock = await getFinancialModelStock(symbol);
-  fStock = await getFinnhubStock(symbol);
+  stock = await getFinnhubStock(symbol);
+  if (stock && (stock.CurrentPrice > 56 || (stock.Low < 48 && stock.IsUp))) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.Change.toFixed(2),
+    });
+  }
+  symbol = "SOFI";
+  stock = await getFinnhubStock(symbol);
+  if (stock && (stock.CurrentPrice > 18 || (stock.Low < 16 && stock.IsUp))) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.Change.toFixed(2),
+    });
+  }
 
+  symbol = "GS";
+  stock = await getFinnhubStock(symbol);
+  if (stock && (stock.CurrentPrice > 843 || (stock.Low < 733 && stock.IsUp))) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.Change.toFixed(2),
+    });
+  }
+
+  symbol = "VLO";
+  stock = await getFinnhubStock(symbol);
   if (
-    (stock && stock.price > 56) ||
-    (fStock && fStock.Low < 48 && fStock.IsUp)
+    stock &&
+    ((stock.IsUp && stock.CurrentPrice > 240) ||
+      (stock.Low < 208 && stock.IsUp))
   ) {
     arrStocks.push({
       symbol,
       description: "Cycle Trading",
-      percentage: stock.changePercentage.toFixed(2),
+      percentage: stock.Change.toFixed(2),
+    });
+  }
+
+  symbol = "LRCX";
+  stock = await getFinnhubStock(symbol);
+  if (stock && ((stock.IsUp && stock.CurrentPrice > 212) || stock.Low < 180)) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.Change.toFixed(2),
     });
   }
 
