@@ -77,13 +77,9 @@ export async function GET() {
   }
 
   symbol = "AMD";
-  stock = await getFinancialModelStock(symbol);
-  let fStock = await getFinnhubStock(symbol);
+  stock = await getFinnhubStock(symbol);
 
-  if (
-    (stock && stock.price > 199) ||
-    (fStock && fStock.Low < 188 && fStock.IsUp)
-  ) {
+  if (stock && (stock.CurrentPrice > 199 || (stock.Low < 188 && stock.IsUp))) {
     arrStocks.push({
       symbol,
       description: "Cycle Trading",
@@ -137,6 +133,46 @@ export async function GET() {
   symbol = "LRCX";
   stock = await getFinnhubStock(symbol);
   if (stock && ((stock.IsUp && stock.CurrentPrice > 212) || stock.Low < 180)) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.Change.toFixed(2),
+    });
+  }
+
+  symbol = "AMZN";
+  stock = await getFinancialModelStock(symbol);
+  if (stock.price > 225) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.changePercentage.toFixed(2),
+    });
+  }
+
+  symbol = "RKLB";
+  stock = await getFinnhubStock(symbol);
+  if (stock && ((stock.IsUp && stock.CurrentPrice > 73) || stock.Low < 63)) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.Change.toFixed(2),
+    });
+  }
+
+  symbol = "NFLX";
+  stock = await getFinancialModelStock(symbol);
+  if (stock && stock.price > 95) {
+    arrStocks.push({
+      symbol,
+      description: "Cycle Trading",
+      percentage: stock.Change.toFixed(2),
+    });
+  }
+
+  symbol = "PLTR";
+  stock = await getFinnhubStock(symbol);
+  if (stock && (stock.CurrentPrice > 161 || stock.Low < 126)) {
     arrStocks.push({
       symbol,
       description: "Cycle Trading",
