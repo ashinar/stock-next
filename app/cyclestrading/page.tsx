@@ -15,10 +15,10 @@ export default function CyclesTrading() {
   }, []);
 
   const loadstocks_3_26 = async (): Promise<void> => {
-    IsStockLowAbovePrice("AMD", 188, setStocks_3_26);
-    IsStockLowAbovePrice("LMND", 48, setStocks_3_26);
+    // IsStockLowAbovePrice("AMD", 188, setStocks_3_26);
+    // IsStockLowAbovePrice("LMND", 48, setStocks_3_26);
 
-    CheckStocks("SOFI", true, 19.5, setStocks_3_26);
+    // CheckStocks("SOFI", true, 19.5, setStocks_3_26);
     CheckStocks("GS", true, 840, setStocks_3_26);
     CheckStocks("VLO", true, 207, setStocks_3_26);
 

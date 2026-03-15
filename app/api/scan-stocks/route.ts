@@ -76,36 +76,6 @@ export async function GET() {
     });
   }
 
-  symbol = "AMD";
-  stock = await getFinnhubStock(symbol);
-
-  if (stock && (stock.CurrentPrice > 199 || (stock.Low < 188 && stock.IsUp))) {
-    arrStocks.push({
-      symbol,
-      description: "Cycle Trading",
-      percentage: stock.changePercentage.toFixed(2),
-    });
-  }
-
-  symbol = "LMND";
-  stock = await getFinnhubStock(symbol);
-  if (stock && (stock.CurrentPrice > 56 || (stock.Low < 48 && stock.IsUp))) {
-    arrStocks.push({
-      symbol,
-      description: "Cycle Trading",
-      percentage: stock.Change.toFixed(2),
-    });
-  }
-  symbol = "SOFI";
-  stock = await getFinnhubStock(symbol);
-  if (stock && (stock.CurrentPrice > 18 || (stock.Low < 16 && stock.IsUp))) {
-    arrStocks.push({
-      symbol,
-      description: "Cycle Trading",
-      percentage: stock.Change.toFixed(2),
-    });
-  }
-
   symbol = "GS";
   stock = await getFinnhubStock(symbol);
   if (stock && (stock.CurrentPrice > 843 || (stock.Low < 733 && stock.IsUp))) {
@@ -166,20 +136,42 @@ export async function GET() {
     arrStocks.push({
       symbol,
       description: "Cycle Trading",
-      percentage: stock.Change.toFixed(2),
+      percentage: 0,
     });
   }
 
-  symbol = "PLTR";
-  stock = await getFinnhubStock(symbol);
-  if (stock && (stock.CurrentPrice > 161 || stock.Low < 126)) {
-    arrStocks.push({
-      symbol,
-      description: "Cycle Trading",
-      percentage: stock.Change.toFixed(2),
-    });
-  }
+  let res = await CheckStocksUpAndDown("SOFI", 18, 16.8, "Cycle Trading");
+  res && arrStocks.push({ res });
+
+  res = await CheckStocksUpAndDown("LMND", 56, 48, "Cycle Trading");
+  res && arrStocks.push({ res });
+
+  res = await CheckStocksUpAndDown("AMD", 199, 188, "Cycle Trading");
+  res && arrStocks.push({ res });
+
+  res = await CheckStocksUpAndDown("PLTR", 161, 126, "Cycle Trading");
+  res && arrStocks.push({ res });
 
   //symbol = "AAOI";
   return Response.json({ stocks: arrStocks });
 }
+
+const CheckStocksUpAndDown = async (
+  symbol: string,
+  upPrice: number,
+  downPrice: number,
+  description: string,
+) => {
+  if (symbol) {
+    let stock = await getFinnhubStock(symbol);
+
+    if (stock && (stock.CurrentPrice > upPrice || stock.Low < downPrice)) {
+      return {
+        symbol,
+        description,
+        percentage: stock.Change && stock.Change.toFixed(2),
+      };
+    }
+  }
+  return false;
+};
